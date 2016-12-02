@@ -28,15 +28,30 @@ public class Example {
 		Instrument[] instr = synth.getDefaultSoundbank().getInstruments();
 		synth.loadInstrument(instr[90]);
 		
-		mc[5].noteOn(60,200);
+		playNote(mc, 60);
+		
+		playNote(mc, 64);
 		
 		try {
-			TimeUnit.SECONDS.sleep(4);
+			TimeUnit.SECONDS.sleep(1);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println("done");
 	}
 
+	private static void playNote(MidiChannel[] channel, int noteNum) {
+		
+		channel[5].noteOn(noteNum, 200);
+		
+		try {
+			TimeUnit.MILLISECONDS.sleep(400);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		channel[5].allNotesOff();
+		System.out.println("done");
+	}
+	
 }
