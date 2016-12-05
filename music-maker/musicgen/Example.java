@@ -32,6 +32,10 @@ public class Example {
 		
 		playNote(mc, 64);
 		
+		int note = 60;
+		
+		int[] options = generateOptions(note);
+		
 		try {
 			TimeUnit.SECONDS.sleep(1);
 		} catch (InterruptedException e) {
@@ -52,6 +56,19 @@ public class Example {
 		}
 		channel[5].allNotesOff();
 		System.out.println("done");
+	}
+	
+	private static int[] generateOptions(int note){
+		int[] tempOptions = new int[6]; 
+		
+		tempOptions[0] = note + 7;
+		tempOptions[1] = note + 3;
+		tempOptions[2] = note + 4;
+		tempOptions[3] = note - 7;
+		tempOptions[4] = note - 3;
+		tempOptions[5] = note - 4;
+
+		return tempOptions;
 	}
 	
 }
