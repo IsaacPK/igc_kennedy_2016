@@ -1,6 +1,5 @@
 package musicgen;
 
-
 import javax.sound.midi.Instrument;
 import javax.sound.midi.MidiChannel;
 import javax.sound.midi.MidiSystem;
