@@ -1,5 +1,6 @@
 package musicgen;
 
+
 import javax.sound.midi.Instrument;
 import javax.sound.midi.MidiChannel;
 import javax.sound.midi.MidiSystem;
@@ -28,9 +29,15 @@ public class Example {
 		Instrument[] instr = synth.getDefaultSoundbank().getInstruments();
 		synth.loadInstrument(instr[90]);
 		
-		playNote(mc, 60);
+		int myRandom = getRandom();
 		
-		playNote(mc, 64);
+	// generateOptions (myRandom);
+		
+		
+		playNote (mc, generateOptions (60,myRandom) );
+		
+		System.out.println(myRandom);
+	
 		
 		try {
 			TimeUnit.SECONDS.sleep(1);
@@ -55,26 +62,35 @@ public class Example {
 	}
 	
 	
-	private static int getRandom {
+	private static int getRandom() {
 	   
-	   int counter = 0;
-
-		while (counter < 100) {
+	  
 
 			Random randomGenerator = new Random();
 
 			int randomInt = randomGenerator.nextInt(100);
 			   
-			int Startnote= 70;
 		
-			int mynotevalue= Startnote + randomInt % 60;
+			int mynotevalue= randomInt % 5;
 		
-			mc[5].noteOn(mynotevalue,400);
-			
-			counter++; 			
-		}
-		
-		return mynotevalue;
+			return mynotevalue;
 	}
 	
-}
+	private static int generateOptions(int note, int randomNumber){
+		 	int[] tempOptions = new int[6]; 
+		 		
+		 		tempOptions[0] = note + 7;
+		 		tempOptions[1] = note + 3;
+		 		tempOptions[2] = note + 4;
+		 		tempOptions[3] = note - 7;
+		 		tempOptions[4] = note - 3;
+		 		tempOptions[5] = note - 4;
+		 
+		 		return tempOptions [randomNumber];
+		
+		 	}
+
+		
+	}
+	
+	
