@@ -31,13 +31,27 @@ public class Example {
 		
 		int myRandom = getRandom();
 		
-	// generateOptions (myRandom);
+		int counter = 0;
 		
+		while (counter < 20){
 		
-		playNote (mc, generateOptions (60,myRandom) );
+		int myNote = generateOptions (60,myRandom);
+		playNote (mc, myNote );
+		
+		myRandom = getRandom();
+		
+		System.out.println(myNote);
+		
+		int myNote2 = generateOptions (myNote, myRandom);
+		playNote (mc, myNote2);
+		
+		System.out.println(myNote2);
 		
 		System.out.println(myRandom);
 	
+		counter++;
+		}
+		
 		
 		try {
 			TimeUnit.SECONDS.sleep(1);
