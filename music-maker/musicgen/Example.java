@@ -7,6 +7,7 @@ import javax.sound.midi.MidiSystem;
 import javax.sound.midi.MidiUnavailableException;
 import javax.sound.midi.Synthesizer;
 import java.util.concurrent.TimeUnit;
+import java.util.Random;
 
 public class Example {
 
@@ -52,6 +53,29 @@ public class Example {
 		}
 		channel[5].allNotesOff();
 		System.out.println("done");
+	}
+	
+	
+	private static int getRandom {
+	   
+	   int counter = 0;
+
+		while (counter < 100) {
+
+			Random randomGenerator = new Random();
+
+			int randomInt = randomGenerator.nextInt(100);
+			   
+			int Startnote= 70;
+		
+			int mynotevalue= Startnote + randomInt % 60;
+		
+			mc[5].noteOn(mynotevalue,400);
+			
+			counter++; 			
+		}
+		
+		return mynotevalue;
 	}
 	
 }
