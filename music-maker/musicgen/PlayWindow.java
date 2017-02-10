@@ -2,6 +2,7 @@
 
 
 
+
 // Concepts borrowed from:
 //http://www3.ntu.edu.sg/home/ehchua/programming/java/j4a_gui.html
 
@@ -18,11 +19,15 @@ import java.io.UnsupportedEncodingException;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
+import javax.swing.*;
+import javax.swing.JLabel;
+import javax.swing.ImageIcon;
 import javax.sound.midi.Instrument;
 import javax.sound.midi.MidiChannel;
 import javax.sound.midi.MidiSystem;
 import javax.sound.midi.MidiUnavailableException;
 import javax.sound.midi.Synthesizer;
+import java.awt.Color;
  
 // An AWT program inherits from the top-level container java.awt.Frame
 public class PlayWindow extends Frame {
@@ -30,9 +35,31 @@ public class PlayWindow extends Frame {
    private TextField tfCount; // Declare a TextField component 
    private Button btnCount, btnRecreate;   // Declare a Button component
    private int count = 0;     // Counter's value
+   
+  JPanel controlPanel= new JPanel();
+  private JFrame mainFrame;
  
+   // Returns an ImageIcon, or null if the path was invalid. 
+   private static ImageIcon createImageIcon(String path,
+      String description) {
+	   
+   
+         return new ImageIcon("C:/Eclipse/workspace/music-maker/image/maxresdefault.png", "cat in toilet roll");
+      
+   }
+   private void showImageIconDemo(){
+      
+      ImageIcon icon = createImageIcon("/resources/java_icon.png","Java");
+
+      JLabel commentlabel = new JLabel("", icon,JLabel.CENTER);
+      controlPanel.add(commentlabel);
+      mainFrame.setVisible(true);  
+   }
    // Constructor to setup GUI components and event handlers
    public PlayWindow () {
+	   
+	      
+	      
       setLayout(new FlowLayout());
          // "super" Frame (a Container) sets its layout to FlowLayout, which arranges
          // the components from left-to-right, and flow to next row from top-to-bottom.
@@ -67,22 +94,32 @@ public class PlayWindow extends Frame {
           }
        });
  
-  
+   
+      ImageIcon icon = createImageIcon ("C:/Eclipse/workspace/music-maker/image/maxresdefault.png", "cat in toilet roll");
+      JLabel label1 = new JLabel("cat in toilet roll", icon, JLabel.CENTER);
+      this.add(label1);
       
      
- 
+      this.setBackground(Color.cyan);
       setTitle("Play Window");  // "super" Frame sets its title
-      setSize(300, 100);        // "super" Frame sets its initial window size
- 
- 
+      setSize(600, 500);        // "super" Frame sets its initial window size
+   
       setVisible(true);         // "super" Frame shows
  
     
-   }
+   
    
   
    
-   public void ReadPlay() {
+	// TODO Auto-generated method stub
+	return;
+}
+
+
+
+
+
+public void ReadPlay() {
 	   Synthesizer synth;
 		try {
 			synth = MidiSystem.getSynthesizer();
