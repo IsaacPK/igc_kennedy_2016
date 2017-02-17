@@ -20,8 +20,6 @@ import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 import javax.swing.*;
-import javax.swing.JLabel;
-import javax.swing.ImageIcon;
 import javax.sound.midi.Instrument;
 import javax.sound.midi.MidiChannel;
 import javax.sound.midi.MidiSystem;
@@ -30,7 +28,7 @@ import javax.sound.midi.Synthesizer;
 import java.awt.Color;
  
 // An AWT program inherits from the top-level container java.awt.Frame
-public class PlayWindow extends Frame {
+public class PlayWindow extends Frame implements WindowListener {
    private Label lblCount, lblRecreate;    // Declare a Label component 
    private TextField tfCount; // Declare a TextField component 
    private Button btnCount, btnRecreate;   // Declare a Button component
@@ -44,7 +42,7 @@ public class PlayWindow extends Frame {
       String description) {
 	   
    
-         return new ImageIcon("C:/Eclipse/workspace/music-maker/image/maxresdefault.png", "cat in toilet roll");
+         return new ImageIcon("maxresdefault.jpg", "cat in toilet roll");
       
    }
    private void showImageIconDemo(){
@@ -63,12 +61,15 @@ public class PlayWindow extends Frame {
       setLayout(new FlowLayout());
          // "super" Frame (a Container) sets its layout to FlowLayout, which arranges
          // the components from left-to-right, and flow to next row from top-to-bottom.
+      
+      Panel Panel1 = new Panel();
+      add (Panel1);
  
       lblCount = new Label("New Music!");  // construct the Label component
-      add(lblCount);                    // "super" Frame adds Label
+      Panel1.add(lblCount);                    // "super" Frame adds Label
       
       btnCount = new Button("New!");   // construct the Button component
-      add(btnCount);   // "super" Frame adds Button
+      Panel1.add(btnCount);   // "super" Frame adds Button
       btnCount.addActionListener(new ActionListener() {
           @Override
           public void actionPerformed(ActionEvent evt) {
@@ -77,32 +78,36 @@ public class PlayWindow extends Frame {
        });
       
       lblRecreate = new Label ("Read from file");
-      add(lblRecreate);
+      Panel1.add(lblRecreate);
  
-    //  tfCount = new TextField("0", 10); // construct the TextField component
-    // tfCount.setEditable(false);       // set to read-only
-    //  add(tfCount);                     // "super" Frame adds TextField
+
  
       
       
       btnRecreate = new Button("Play");
-      add(btnRecreate);
+      Panel1.add(btnRecreate);
       btnRecreate.addActionListener(new ActionListener() {
           @Override
           public void actionPerformed(ActionEvent evt) {
              ReadPlay();
           }
        });
+       
+      Panel Panel2 = new Panel();
+      add(Panel2);
+        tfCount = new TextField("0", 10); // construct the TextField component
+     
+      Panel2.add(tfCount);                     // "super" Frame adds TextField;
  
    
-      ImageIcon icon = createImageIcon ("C:/Eclipse/workspace/music-maker/image/maxresdefault.png", "cat in toilet roll");
-      JLabel label1 = new JLabel("cat in toilet roll", icon, JLabel.CENTER);
-      this.add(label1);
+      ImageIcon icon = createImageIcon ("C:/Eclipse/workspace/music-maker/image/maxresdefault.png", "");
+     JLabel label1 = new JLabel("", icon, JLabel.CENTER);
+     this.add(label1);
       
      
       this.setBackground(Color.cyan);
       setTitle("Play Window");  // "super" Frame sets its title
-      setSize(600, 500);        // "super" Frame sets its initial window size
+      setSize(300, 400);        // "super" Frame sets its initial window size
    
       setVisible(true);         // "super" Frame shows
  
@@ -234,12 +239,17 @@ public void ReadPlay() {
 			
 			return;
 		}
-		   
+		
+		int lastnote = 79;
 		
 		while (counter < 10){
 			
 		
-			int myNote = generateOptions (65 ,myRandom);
+			int myNote = generateOptions (lastnote ,myRandom);
+			while ( myNote < 30 || myNote > 80 ) {
+				
+			  myNote = generateOptions (lastnote, getRandom());
+			}
 			playNote (mc, myNote );
 		
 			myRandom = getRandom();
@@ -247,21 +257,14 @@ public void ReadPlay() {
 			System.out.println(myNote);
 		
 			System.out.println (myRandom);
-		
-			myRandom = getRandom();
-		
-			int myNote2 = generateOptions (myNote, myRandom);
-		
-			playNote (mc, myNote2);
-		
-			System.out.println(myNote2);
-		
-			System.out.println(myRandom);
+
 	
 			counter++;
 			
+			lastnote = myNote;
+			
 			writer.println(myNote);
-		    writer.println(myNote2);
+		
 		
 		}
 		
@@ -304,5 +307,40 @@ public void ReadPlay() {
 	 		return tempOptions [randomNumber];
 	
 	 	}
+	
+	   @Override
+	   public void windowClosing(WindowEvent evt) {
+	      System.exit(0);  // Terminate the program
+	   }
+	@Override
+	public void windowActivated(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void windowClosed(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void windowDeactivated(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void windowDeiconified(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void windowIconified(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void windowOpened(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
 
 }
