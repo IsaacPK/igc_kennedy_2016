@@ -49,7 +49,7 @@ public class PlayWindow extends Frame implements WindowListener {
       
    }
    
-   private static String [] filename = {"file 1", "file 2"};
+   private static String [] filename = {"Added files here"};
    
    // Constructor to setup GUI components and event handlers
    public PlayWindow () {
@@ -98,17 +98,19 @@ public class PlayWindow extends Frame implements WindowListener {
       Panel2.add(tfCount);                     // "super" Frame adds TextField;
       
  
-      btnNew = new Button ("create new folder");
+      btnNew = new Button ("new folder");
       Panel2.add(btnNew);
       btnNew.addActionListener(new ActionListener() {
           @Override
           public void actionPerformed(ActionEvent evt) {
              newFile();
+             filename [0] =  tfCount.getText();
           }
        });
       
       box = new JComboBox (filename);
       Panel2.add(box);
+     
       
       btnfilefind = new Button ("find file");
       Panel2.add(btnfilefind);
@@ -130,7 +132,7 @@ public class PlayWindow extends Frame implements WindowListener {
      
       this.setBackground(new Color (126,171, 166));
       setTitle("Play Window");  // "super" Frame sets its title
-      setSize(300, 400);        // "super" Frame sets its initial window size
+      setSize(350, 400);        // "super" Frame sets its initial window size
    
       setVisible(true);         // "super" Frame shows
  
@@ -164,7 +166,7 @@ public class PlayWindow extends Frame implements WindowListener {
 	
 	
 	 // The name of the file to open.
-   String fileName = tfCount.getText();
+   String fileName = (String) box.getSelectedItem();
 
    // This will reference one line at a time
    String line = null;
@@ -215,7 +217,7 @@ public class PlayWindow extends Frame implements WindowListener {
 
     public void newFile () {
 	
-	String filename = tfCount.getText();
+	String filename = tfCount.getText() + ".txt";
      tfCount.setText("");  // Clear input TextField
 
     try {
@@ -228,7 +230,85 @@ public class PlayWindow extends Frame implements WindowListener {
     	e.printStackTrace();
     }
 
+{
+		
+		Synthesizer synth;
+		try {
+			synth = MidiSystem.getSynthesizer();
+			synth.open();
+		} catch (MidiUnavailableException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return;
+		}
+		
+		final MidiChannel[] mc = synth.getChannels();
+		Instrument[] instr = synth.getDefaultSoundbank().getInstruments();
+		synth.loadInstrument(instr[90]);
+		
+		int myRandom = getRandom();
+		
+		int counter = 0;
+		
+		PrintWriter writer;
+		try {
+			writer = new PrintWriter(filename, "UTF-8");
+		} catch (FileNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+			
+			return;
+		} catch (UnsupportedEncodingException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+			
+			return;
+		}
+		
+		int lastnote = 65;
+		
+		while (counter < 10){
+			
+		
+			int myNote = generateOptions (lastnote ,myRandom);
+			while ( myNote < 30 || myNote > 80 ) {
+				
+			  myNote = generateOptions (lastnote, getRandom());
+			}
+			playNote (mc, myNote );
+		
+			myRandom = getRandom();
+		
+			System.out.println(myNote);
+		
+			System.out.println (myRandom);
+
+	
+			counter++;
+			
+			lastnote = myNote;
+			
+			writer.println(myNote);
+		
+		
+		}
+		
+		
+		try {
+			TimeUnit.SECONDS.sleep(1);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		writer.close();
+		
+		
 	}
+    box.insertItemAt(filename, 1);
+	}
+    
+    
 
     public void ReadPlay() {
 	   Synthesizer synth;
@@ -348,7 +428,7 @@ public class PlayWindow extends Frame implements WindowListener {
 		
 		int lastnote = 65;
 		
-		while (counter < 2){
+		while (counter < 25){
 			
 		
 			int myNote = generateOptions (lastnote ,myRandom);
